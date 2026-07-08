@@ -1,0 +1,920 @@
+<title>Car Zone &mdash; Wholesale Used Vehicles, Birmingham AL</title>
+<style>
+  :root{
+    --bg:#f3f5f8; --surface:#ffffff; --surface-2:#e7ecf2; --ink:#0f1826; --muted:#5a6577;
+    --line:#d8dfe8; --accent:#ffd400; --accent-ink:#12213c; --accent-text:#0c294b; --chrome:#78859a;
+    --good:#1f8a4c; --good-bg:#e2f3e8; --pending:#dc143c; --pending-bg:#fbe3e9;
+    --navy:#0c294b; --navy-deep:#081c33;
+    --shadow:rgba(12,41,75,.16);
+    --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#080d16; --surface:#101d33; --surface-2:#162945; --ink:#eef2f8; --muted:#95a3ba;
+      --line:#22314e; --accent:#ffd400; --accent-ink:#12213c; --accent-text:#ffd400; --chrome:#8b98ad;
+      --good:#3fcf82; --good-bg:rgba(63,207,130,.16); --pending:#ff5470; --pending-bg:rgba(255,84,112,.16);
+      --shadow:rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#080d16; --surface:#101d33; --surface-2:#162945; --ink:#eef2f8; --muted:#95a3ba;
+    --line:#22314e; --accent:#ffd400; --accent-ink:#12213c; --accent-text:#ffd400; --chrome:#8b98ad;
+    --good:#3fcf82; --good-bg:rgba(63,207,130,.16); --pending:#ff5470; --pending-bg:rgba(255,84,112,.16);
+    --shadow:rgba(0,0,0,.55);
+  }
+  :root[data-theme="light"]{
+    --bg:#f3f5f8; --surface:#ffffff; --surface-2:#e7ecf2; --ink:#0f1826; --muted:#5a6577;
+    --line:#d8dfe8; --accent:#ffd400; --accent-ink:#12213c; --accent-text:#0c294b; --chrome:#78859a;
+    --good:#1f8a4c; --good-bg:#e2f3e8; --pending:#dc143c; --pending-bg:#fbe3e9;
+    --shadow:rgba(12,41,75,.16);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--font-body);
+    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%; display:block;}
+  a{color:inherit;}
+  button{font:inherit;}
+  h1,h2,h3{text-wrap:balance; margin:0;}
+  :focus-visible{outline:2px solid var(--accent-text); outline-offset:3px; border-radius:2px;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
+  @media (max-width:640px){.wrap{padding:0 16px;}}
+
+  .display{
+    font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+    letter-spacing:-.01em; text-wrap:balance;
+  }
+  .condensed{ display:inline-block; transform:scaleX(.93); transform-origin:left center; letter-spacing:-.02em; }
+  .eyebrow{
+    font-size:.75rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-text);
+  }
+  .tabular{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; } }
+
+  /* pennant / bunting divider - pure CSS, always fills full width */
+  .pennant-bar{
+    height:18px; width:100%;
+    background-color:var(--navy);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='16'%3E%3Cpolygon points='2,0 20,0 11,16' fill='%23ffd400'/%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-position:10px 0;
+  }
+
+  /* topbar + header: fixed navy brand chrome regardless of theme */
+  .topbar{ background:var(--navy-deep); border-bottom:1px solid rgba(255,255,255,.08); font-size:.8rem; }
+  .topbar .wrap{ display:flex; justify-content:space-between; align-items:center; padding-top:7px; padding-bottom:7px; color:rgba(255,255,255,.82); gap:12px; flex-wrap:wrap; }
+  .topbar a{ color:rgba(255,255,255,.82); text-decoration:none; }
+  .topbar a:hover{ color:#fff; }
+
+  header.site{ position:sticky; top:0; z-index:40; background:linear-gradient(180deg,var(--navy),var(--navy-deep)); border-bottom:3px solid var(--accent); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; gap:20px; }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:#fff; }
+  .brand .mark{ font-size:clamp(2.4rem,4.4vw,3.3rem); color:var(--accent); line-height:1; text-shadow:0 0 18px rgba(255,212,0,.28); }
+  .brand small{ display:block; font-size:.64rem; letter-spacing:.1em; color:rgba(255,255,255,.72); font-weight:600; text-transform:uppercase; line-height:1.5; }
+  nav.primary{ display:flex; gap:26px; align-items:center; }
+  nav.primary a{ text-decoration:none; font-weight:600; font-size:.92rem; color:rgba(255,255,255,.75); padding:6px 2px; border-bottom:2px solid transparent; }
+  nav.primary a:hover{ color:#fff; }
+  nav.primary a.active{ color:#fff; border-bottom-color:var(--accent); }
+  .call-btn{ display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:var(--accent-ink); padding:10px 16px; border-radius:3px; font-weight:800; text-decoration:none; font-size:.9rem; white-space:nowrap; }
+  .call-btn:hover{ filter:brightness(1.06); }
+  .burger{ display:none; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.35); border-radius:4px; padding:8px 10px; color:#fff; }
+  .mobile-nav{ display:none; flex-direction:column; gap:2px; padding:8px 0 16px; }
+  .mobile-nav a{ text-decoration:none; color:#fff; font-weight:600; padding:10px 4px; border-bottom:1px solid rgba(255,255,255,.15); }
+  .mobile-nav a:hover{ color:var(--accent); }
+  @media (max-width:860px){
+    nav.primary{ display:none; }
+    .burger{ display:inline-flex; }
+    .call-btn span.label{ display:none; }
+    header.site.open .mobile-nav{ display:flex; }
+  }
+  @media (max-width:420px){ .brand small{ display:none; } }
+
+  /* buttons */
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:3px; font-weight:700; text-decoration:none; border:1px solid transparent; cursor:pointer; font-size:.95rem; }
+  .btn-accent{ background:var(--accent); color:var(--accent-ink); }
+  .btn-accent:hover{ filter:brightness(1.05); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--chrome); }
+  .btn-block{ width:100%; justify-content:center; }
+  .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+  /* hero */
+  .hero{ padding:48px 0 0; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:start; padding-bottom:36px; }
+  @media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .hero h1{ font-size:clamp(2.1rem,5.6vw,3.6rem); margin:10px 0 16px; }
+  .hero p.lede{ color:var(--muted); font-size:1.08rem; max-width:52ch; margin:0 0 26px; }
+  .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+  .stat-row{ display:flex; gap:28px; margin-top:34px; flex-wrap:wrap; }
+  .stat b{ display:block; font-family:var(--font-mono); font-size:1.5rem; font-variant-numeric:tabular-nums; }
+  .stat span{ font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+
+  /* quick search card (replaces old hero art) */
+  .quick-search{ border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface); box-shadow:0 20px 44px -26px var(--shadow); }
+  .qs-head{ background:linear-gradient(135deg,var(--navy),var(--navy-deep)); padding:16px 22px; }
+  .qs-head .eyebrow{ color:var(--accent); }
+  .qs-head h3{ color:#fff; font-size:1.2rem; margin:3px 0 0; }
+  .qs-body{ padding:22px; display:flex; flex-direction:column; gap:14px; }
+  .qs-body .field{ width:100%; }
+  .qs-body select{ width:100%; }
+  .qs-note{ text-align:center; font-size:.8rem; color:var(--muted); padding:0 20px 20px; margin-top:-6px; }
+
+  /* section headers */
+  .section{ padding:52px 0; border-top:1px solid var(--line); }
+  .section-head{ margin-bottom:8px; }
+  .section-head h2{ font-size:1.7rem; margin-top:6px; }
+  .section-sub{ color:var(--muted); max-width:62ch; margin:10px 0 26px; }
+
+  /* browse by make */
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .chip{ border:1px solid var(--line); background:var(--surface); padding:8px 14px; border-radius:999px; font-size:.85rem; font-weight:600; cursor:pointer; color:var(--ink); }
+  .chip:hover{ border-color:var(--accent); }
+  .chip.active{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+  /* adaptive filter toolbar - lightweight, not a big search console */
+  .filter-row{ display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:22px 0 6px; }
+  .field{ display:flex; flex-direction:column; gap:5px; font-size:.78rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+  .field select, .field input, .field textarea{
+    font:inherit; padding:9px 10px; border-radius:3px; border:1px solid var(--line); background:var(--bg); color:var(--ink); min-width:150px;
+  }
+  .field textarea{ min-width:auto; width:100%; resize:vertical; }
+  .filter-row .reset{ margin-left:auto; align-self:center; font-size:.85rem; color:var(--muted); text-decoration:underline; background:none; border:none; cursor:pointer; padding:9px 4px;}
+  .more-filters{ margin:14px 0 4px; }
+  .more-filters summary{ cursor:pointer; font-size:.85rem; font-weight:700; color:var(--muted); list-style:none; display:inline-flex; align-items:center; gap:4px; }
+  .more-filters summary::-webkit-details-marker{ display:none; }
+  .more-filters summary::before{ content:"+"; color:var(--accent-text); font-weight:800; }
+  .more-filters[open] summary::before{ content:"\2212"; }
+  .filters-extra{ display:flex; gap:14px; flex-wrap:wrap; margin-top:12px; }
+  .result-count{ color:var(--muted); font-size:.88rem; margin:18px 0 14px; }
+
+  /* inventory grid */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; overflow:hidden; display:flex; flex-direction:column; }
+  .card-media{ position:relative; aspect-ratio:16/10; background:linear-gradient(180deg,var(--surface-2),var(--bg)); display:flex; align-items:center; justify-content:center; }
+  .card-media .car-glyph{ width:62%; }
+  .status-pill{ position:absolute; top:10px; left:10px; font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:999px; }
+  .status-active{ background:var(--good-bg); color:var(--good); }
+  .status-pending{ background:var(--pending-bg); color:var(--pending); }
+  .price-tag{ position:absolute; bottom:-6px; right:10px; background:var(--accent); color:var(--accent-ink); font-family:var(--font-mono); font-weight:800; font-size:.95rem; padding:7px 14px 7px 18px; transform:rotate(-3deg); clip-path:polygon(12px 0,100% 0,100% 100%,12px 100%,0 50%); }
+  .price-tag::after{ content:""; position:absolute; left:5px; top:50%; width:4px; height:4px; margin-top:-2px; border-radius:50%; background:var(--accent-ink); opacity:.5; }
+  .card-body{ padding:16px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-body h3{ font-size:1.05rem; }
+  .card-body .trim{ color:var(--muted); font-size:.85rem; margin-top:-6px; }
+  .meta-row{ display:flex; gap:14px; font-size:.82rem; color:var(--muted); font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  .card-body .btn{ margin-top:auto; }
+
+  /* trust strip */
+  .trust-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  @media (max-width:800px){ .trust-grid{ grid-template-columns:repeat(2,1fr); } }
+  .trust-item{ padding:18px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+  .trust-item .ic{ font-size:1.4rem; }
+  .trust-item h4{ margin:10px 0 4px; font-size:.95rem; }
+  .trust-item p{ margin:0; font-size:.85rem; color:var(--muted); }
+
+  /* cta band */
+  .cta-band{ background:linear-gradient(135deg,var(--navy),var(--navy-deep)); padding:44px 0; text-align:center; }
+  .cta-band h2{ font-size:1.6rem; margin-bottom:10px; color:#fff; }
+  .cta-band p{ color:rgba(255,255,255,.78); margin:0 0 20px; }
+
+  /* footer */
+  footer.site{ padding:48px 0 28px; background:linear-gradient(180deg,var(--navy),var(--navy-deep)); color:rgba(255,255,255,.85); }
+  .footer-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:30px; margin-bottom:32px; }
+  @media (max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
+  .footer-grid h5{ font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin:0 0 12px; }
+  .footer-grid a{ display:block; text-decoration:none; color:#fff; font-size:.9rem; margin-bottom:8px; }
+  .footer-grid a:hover{ color:var(--accent); }
+  .footer-grid p{ font-size:.9rem; color:rgba(255,255,255,.75); margin:0 0 8px; }
+  .social-row{ display:flex; gap:10px; margin-top:10px; }
+  .social-row a{ width:34px; height:34px; border:1px solid rgba(255,255,255,.35); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0; color:#fff; }
+  .social-row svg{ width:16px; height:16px; }
+  .foot-bottom{ border-top:1px solid rgba(255,255,255,.15); padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.8rem; color:rgba(255,255,255,.65); }
+
+  /* vehicle detail */
+  .breadcrumb{ font-size:.85rem; color:var(--muted); margin-bottom:18px; }
+  .breadcrumb a{ text-decoration:none; color:var(--muted); }
+  .breadcrumb a:hover{ color:var(--accent-text); }
+  .vd-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:36px; }
+  @media (max-width:900px){ .vd-grid{ grid-template-columns:1fr; } }
+  .vd-media{ aspect-ratio:4/3; border:1px solid var(--line); border-radius:6px; background:linear-gradient(180deg,var(--surface-2),var(--bg)); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .vd-media .car-glyph{ width:66%; }
+  .thumb-row{ display:flex; gap:8px; }
+  .thumb-row div{ flex:1; aspect-ratio:1; border:1px solid var(--line); border-radius:4px; background:var(--surface-2); display:flex; align-items:center; justify-content:center; }
+  .thumb-row .car-glyph{ width:60%; }
+  .price-block{ display:flex; align-items:baseline; gap:14px; margin:6px 0 18px; flex-wrap:wrap; }
+  .price-block .amt{ font-family:var(--font-mono); font-size:2.1rem; font-weight:800; font-variant-numeric:tabular-nums; }
+  .price-block .down{ color:var(--muted); font-size:.9rem; }
+  .spec-sheet{ border:1px solid var(--line); border-radius:6px; overflow:hidden; margin:18px 0; }
+  .spec-row{ display:flex; justify-content:space-between; padding:10px 14px; font-size:.9rem; border-bottom:1px solid var(--line); }
+  .spec-row:last-child{ border-bottom:none; }
+  .spec-row:nth-child(even){ background:var(--surface-2); }
+  .spec-row span:first-child{ color:var(--muted); }
+  .spec-row span:last-child{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+  .tabs{ display:flex; gap:2px; border-bottom:1px solid var(--line); margin-top:26px; }
+  .tab-btn{ background:none; border:none; padding:10px 16px; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent-text); }
+  .tab-panel{ padding:18px 2px; font-size:.94rem; color:var(--ink); line-height:1.7; }
+  .tab-panel ul{ margin:0; padding-left:20px; columns:2; gap:20px; }
+  @media (max-width:520px){ .tab-panel ul{ columns:1; } }
+  .disclaimer-box{ margin-top:30px; padding:14px; border:1px dashed var(--line); border-radius:6px; font-size:.8rem; color:var(--muted); }
+  .vd-ctas{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+
+  /* forms (contact / car finder) */
+  .form-shell{ display:grid; grid-template-columns:1.3fr .8fr; gap:36px; }
+  @media (max-width:860px){ .form-shell{ grid-template-columns:1fr; } }
+  form.stack{ display:flex; flex-direction:column; gap:16px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:520px){ .form-row{ grid-template-columns:1fr; } }
+  form.stack label{ display:flex; flex-direction:column; gap:6px; font-size:.82rem; font-weight:600; color:var(--muted); }
+  form.stack label span.req::after{ content:" *"; color:var(--pending); }
+  form.stack input, form.stack select, form.stack textarea{
+    font:inherit; padding:11px 12px; border-radius:4px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  }
+  form.stack textarea{ resize:vertical; min-height:110px; }
+  .req-note{ font-size:.78rem; color:var(--muted); }
+  .info-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:20px; height:fit-content; }
+  .info-card h3{ font-size:1rem; margin-bottom:14px; }
+  .info-line{ display:flex; gap:10px; font-size:.9rem; margin-bottom:12px; align-items:flex-start; }
+  .info-line .ic{ color:var(--accent-text); flex-shrink:0; }
+  .confirm-box{ background:var(--good-bg); color:var(--good); border:1px solid currentColor; border-radius:6px; padding:14px 16px; font-weight:600; font-size:.9rem; margin-bottom:16px; }
+  .honeypot{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+  /* directions map graphic */
+  .map-graphic{ aspect-ratio:16/9; border:1px solid var(--line); border-radius:6px; background:var(--surface-2); position:relative; overflow:hidden; }
+  .map-graphic svg{ width:100%; height:100%; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .hours-table td{ padding:7px 0; border-bottom:1px solid var(--line); font-size:.92rem; }
+  .hours-table td:last-child{ text-align:right; font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+
+  .legal h2{ font-size:1.4rem; margin:26px 0 10px; }
+  .legal h2:first-child{ margin-top:0; }
+  .legal p{ color:var(--muted); max-width:70ch; }
+
+  .empty-state{ text-align:center; padding:50px 20px; color:var(--muted); border:1px dashed var(--line); border-radius:6px; }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="car-icon" viewBox="0 0 200 90">
+      <path d="M8,66 L8,50 Q8,40 22,38 L54,38 Q66,18 92,18 L128,18 Q150,18 160,38 L178,38 Q192,40 192,50 L192,66 Z" fill="currentColor" opacity="0.92"/>
+      <circle cx="48" cy="68" r="15" fill="var(--ink)" opacity="0.85"/>
+      <circle cx="48" cy="68" r="6" fill="var(--surface)"/>
+      <circle cx="152" cy="68" r="15" fill="var(--ink)" opacity="0.85"/>
+      <circle cx="152" cy="68" r="6" fill="var(--surface)"/>
+      <rect x="66" y="30" width="18" height="16" rx="2" fill="var(--surface)" opacity="0.55"/>
+      <rect x="90" y="26" width="34" height="20" rx="2" fill="var(--surface)" opacity="0.55"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var PHONE = "(205) 401-0893";
+  var TEL = "tel:+12054010893";
+  var ADDRESS = "3433 Vanderbilt Rd, Birmingham, AL 35217";
+  var EMAIL = "semih__yilmaz@hotmail.com";
+  var MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ADDRESS);
+
+  var PAINT = ["#1b1c1f","#eef0ee","#5b5f66","#1f4d3a","#6b2338","#1e3350","#b9bcc0","#9c2b2b","#a68a5b","#3b6178"];
+  var INT_COLORS = ["Black","Gray","Beige","Tan","Charcoal"];
+  var ENGINES = ["4-Cyl 2.0L","4-Cyl 2.4L","V6 3.6L","4-Cyl 1.8L Turbo","V6 3.8L","4-Cyl 2.5L"];
+  var OPTION_POOL = ["Backup Camera","Bluetooth Audio","Keyless Entry","Alloy Wheels","Heated Seats",
+    "Power Sunroof","Third-Row Seating","Navigation System","Cruise Control","Power Windows & Locks",
+    "Tow Package","Leather Seating","Remote Start","Fog Lights","Apple CarPlay","Blind Spot Monitor"];
+  var DESC_FLAVOR = [
+    "Runs and drives great \u2014 brought in on trade and gone through by our shop before it hit the lot.",
+    "Clean example of this model. Tires and brakes were checked and serviced as needed prior to sale.",
+    "One of the more requested vehicles we've had this month \u2014 priced to move quickly.",
+    "Well cared for by its previous owner. Fluids serviced and a full once-over completed in-house.",
+    "Solid daily driver. Cold A/C, straight body, no warning lights.",
+    "Traded in recently and reconditioned by our team \u2014 ready for a new owner."
+  ];
+
+  var RAW = [
+    {stock:"0349", year:2015, make:"Buick", model:"Encore", trim:"Base", price:6700, miles:81339, status:"active"},
+    {stock:"6097", year:2015, make:"Chevrolet", model:"Camaro", trim:"LT", price:10000, miles:105076, status:"active", doors:2},
+    {stock:"0636", year:2018, make:"Chevrolet", model:"Cruze", trim:"Premier", price:7200, miles:135600, status:"active"},
+    {stock:"6815", year:2019, make:"Dodge", model:"Journey", trim:"GT", price:7200, miles:84889, status:"active"},
+    {stock:"5355", year:2016, make:"GMC", model:"Yukon XL", trim:"SLT", price:16000, miles:129100, status:"active", engine:"V6 3.6L"},
+    {stock:"0798", year:2013, make:"Hyundai", model:"Genesis", trim:"3.8L", price:7000, miles:109771, status:"active", engine:"V6 3.8L"},
+    {stock:"25000", year:2014, make:"Hyundai", model:"Sonata", trim:"SE", price:6000, miles:147244, status:"active"},
+    {stock:"8042", year:2021, make:"Jeep", model:"Wrangler Unlimited", trim:"Sport", price:18000, miles:124231, status:"active", doors:4, engine:"V6 3.6L"},
+    {stock:"0836", year:2019, make:"Mitsubishi", model:"Outlander", trim:"ES", price:6800, miles:106880, status:"active"},
+    {stock:"5839", year:2017, make:"Nissan", model:"Rogue Sport", trim:"SL", price:8500, miles:86857, status:"active"},
+    {stock:"1450", year:2014, make:"Volkswagen", model:"Jetta", trim:"SE", price:5800, miles:97323, status:"active", trans:"Manual"},
+    {stock:"5779", year:2013, make:"Buick", model:"LaCrosse", trim:"Base", price:7500, miles:63764, status:"active"},
+    {stock:"5038", year:2015, make:"Buick", model:"Verano", trim:"Base", price:6000, miles:67331, status:"active"},
+    {stock:"1594", year:2016, make:"Buick", model:"Verano", trim:"Base", price:6800, miles:82708, status:"active"},
+    {stock:"6268", year:2017, make:"Ford", model:"Fusion", trim:"SE", price:7500, miles:82631, status:"active"},
+    {stock:"1603", year:2015, make:"Infiniti", model:"Q70", trim:"Base", price:7500, miles:139118, status:"active", engine:"V6 3.6L"},
+    {stock:"3839", year:2010, make:"Lexus", model:"IS 350", trim:"Base", price:6000, miles:206191, status:"active", engine:"V6 3.6L"},
+    {stock:"9545", year:2012, make:"Lincoln", model:"MKZ", trim:"Ultimate", price:5700, miles:119716, status:"active"},
+    {stock:"2390", year:2015, make:"Lincoln", model:"MKZ", trim:"2.0T", price:7000, miles:107532, status:"active", engine:"4-Cyl 1.8L Turbo"},
+    {stock:"55222", year:2014, make:"Nissan", model:"Maxima", trim:"S", price:6500, miles:97915, status:"active"},
+    {stock:"2862", year:2019, make:"Volkswagen", model:"Jetta", trim:"SE", price:10000, miles:104287, status:"active"},
+    {stock:"0105", year:2016, make:"Nissan", model:"Altima", trim:"SR", price:null, miles:124733, status:"pending"}
+  ];
+
+  function seedPick(arr, seed){ return arr[seed % arr.length]; }
+
+  function enrich(v, i){
+    v.id = v.stock;
+    v.paint = seedPick(PAINT, i);
+    v.intColor = seedPick(INT_COLORS, i + 2);
+    v.engine = v.engine || seedPick(ENGINES, i);
+    v.trans = v.trans || (i % 5 === 0 ? "Manual" : "Automatic");
+    v.doors = v.doors || 4;
+    v.vin = "1" + v.make.slice(0,1).toUpperCase() + v.model.replace(/[^A-Z0-9]/gi,"").slice(0,2).toUpperCase() +
+      String(v.year).slice(2) + "US" + String(1000000 + i * 7919).slice(-7);
+    var opts = [];
+    for (var k = 0; k < 6; k++){ opts.push(seedPick(OPTION_POOL, i * 3 + k)); }
+    v.options = opts.filter(function(o,idx){ return opts.indexOf(o) === idx; });
+    v.description = "This " + v.year + " " + v.make + " " + v.model + (v.trim ? " " + v.trim : "") + " has " +
+      v.miles.toLocaleString() + " miles on it. " + seedPick(DESC_FLAVOR, i) +
+      " Stop by the lot at " + ADDRESS.split(",")[0] + " or call " + PHONE + " to see it in person.";
+    return v;
+  }
+
+  var VEHICLES = RAW.map(enrich);
+  var MAKES = Array.from(new Set(VEHICLES.map(function(v){ return v.make; }))).sort();
+
+  function money(n){ return n == null ? "Coming Soon" : "$" + n.toLocaleString(); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+  function carGlyph(color, extraClass){
+    return '<svg class="car-glyph ' + (extraClass||'') + '" style="color:' + color + '" viewBox="0 0 200 90"><use href="#car-icon"></use></svg>';
+  }
+
+  function priceOptions(){
+    return '<option value="">Any Price</option><option value="u6">Under $6,000</option><option value="6-8">$6,000&ndash;$8,000</option><option value="8-12">$8,000&ndash;$12,000</option><option value="12p">$12,000+</option>';
+  }
+  function makeOptions(withAny){
+    return (withAny ? '<option value="">Any Make</option>' : '') + MAKES.map(function(m){return '<option value="'+esc(m)+'">'+esc(m)+'</option>';}).join("");
+  }
+
+  function iconPhone(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.35 1.79.68 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.25a2 2 0 0 1 2.11-.45c.84.33 1.73.56 2.63.68A2 2 0 0 1 22 16.92z"/></svg>'; }
+  function iconPin(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'; }
+  function iconClock(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'; }
+  function iconMail(){ return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>'; }
+  function iconFB(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg>'; }
+  function iconX(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-7l-5.5-7.2L4.5 22H1.4l8.1-9.3L1 2h7.2l5 6.6zm-1.2 18h1.7L7.4 3.9H5.6z"/></svg>'; }
+  function iconYT(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.6-.5-5.2c-.3-1-1-1.7-2-2C18.9 4.3 12 4.3 12 4.3s-6.9 0-8.5.5c-1 .3-1.7 1-2 2C1 8.4 1 12 1 12s0 3.6.5 5.2c.3 1 1 1.7 2 2 1.6.5 8.5.5 8.5.5s6.9 0 8.5-.5c1-.3 1.7-1 2-2 .5-1.6.5-5.2.5-5.2zM9.8 15.5v-7l6 3.5z"/></svg>'; }
+
+  /* ---------------- routing ---------------- */
+  var routes = {
+    "": renderHome,
+    "home": renderHome,
+    "car-finder": renderCarFinder,
+    "contact": renderContact,
+    "directions": renderDirections,
+    "disclaimer": renderDisclaimer
+  };
+
+  function currentRoute(){ return location.hash.replace(/^#\/?/, ""); }
+
+  function route(){
+    var r = currentRoute();
+    var app = document.getElementById("app");
+    var vehicleMatch = r.match(/^vehicle\/(.+)$/);
+    var html = "";
+    if (vehicleMatch){
+      html = renderVehicleDetail(decodeURIComponent(vehicleMatch[1]));
+    } else if (routes[r]){
+      html = routes[r]();
+    } else {
+      html = renderHome();
+    }
+    app.innerHTML = layout(html, r, vehicleMatch ? "vehicle" : r || "home");
+    window.scrollTo(0,0);
+    bindGlobal();
+    if (!vehicleMatch && (r === "" || r === "home")) bindHome();
+    if (vehicleMatch) bindVehicleDetail(vehicleMatch[1]);
+    if (r === "contact") bindForm("contact-form", function(data){
+      return "Thanks, " + esc(data.name || "there") + " \u2014 we've got your message and will reach out at " + esc(data.phone || data.email) + " shortly.";
+    });
+    if (r === "car-finder") bindForm("finder-form", function(data){
+      return "Thanks, " + esc(data.firstname || "there") + " \u2014 we'll start hunting for a " +
+        esc(data.year||"") + " " + esc(data.make||"any make") + " and follow up at " + esc(data.phone || data.email) +
+        " within your selected search window.";
+    });
+  }
+
+  window.addEventListener("hashchange", route);
+  document.addEventListener("DOMContentLoaded", route);
+
+  /* ---------------- layout shell ---------------- */
+  function navLink(href, label, key, current){
+    var cls = current === key ? "active" : "";
+    return '<a class="' + cls + '" href="#/' + href + '" data-key="' + key + '">' + label + '</a>';
+  }
+
+  function layout(inner, rawRoute, activeKey){
+    var links = [
+      navLink("", "Home", "home", activeKey),
+      navLink("car-finder", "Car Finder", "car-finder", activeKey),
+      navLink("contact", "Contact Us", "contact", activeKey),
+      navLink("directions", "Directions", "directions", activeKey),
+      navLink("disclaimer", "Disclaimer", "disclaimer", activeKey)
+    ].join("");
+
+    return '' +
+    '<div class="topbar"><div class="wrap">' +
+      '<span>' + iconClock() + ' &nbsp;Mon\u2013Fri 9am\u20136pm \u00b7 Sat 9am\u20135pm \u00b7 Sun Closed</span>' +
+      '<a href="' + TEL + '">' + iconPhone() + ' &nbsp;' + PHONE + '</a>' +
+    '</div></div>' +
+    '<header class="site" id="site-header">' +
+      '<div class="wrap nav-row">' +
+        '<a class="brand" href="#/">' +
+          '<span class="mark display condensed">Car Zone</span>' +
+          '<small>Wholesale<br>Vehicles</small>' +
+        '</a>' +
+        '<nav class="primary">' + links + '</nav>' +
+        '<div style="display:flex;gap:10px;align-items:center;">' +
+          '<a class="call-btn" href="' + TEL + '">' + iconPhone() + '<span class="label">Call ' + PHONE + '</span></a>' +
+          '<button class="burger" id="burger-btn" aria-label="Toggle menu" aria-expanded="false">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="wrap mobile-nav">' + links + '</div>' +
+    '</header>' +
+    '<main>' + inner + '</main>' +
+    footer();
+  }
+
+  function footer(){
+    return '<footer class="site"><div class="wrap">' +
+      '<div class="footer-grid">' +
+        '<div>' +
+          '<div class="mark display condensed" style="font-size:1.5rem;margin-bottom:10px;color:var(--accent);">Car Zone</div>' +
+          '<p>A wholesale used-vehicle lot in Birmingham, Alabama. Hand-picked inventory, straight pricing, no corporate runaround.</p>' +
+          '<div class="social-row">' +
+            '<a href="#" onclick="return false" title="Facebook \u2014 add link" aria-label="Facebook">' + iconFB() + '</a>' +
+            '<a href="#" onclick="return false" title="X / Twitter \u2014 add link" aria-label="X">' + iconX() + '</a>' +
+            '<a href="#" onclick="return false" title="YouTube \u2014 add link" aria-label="YouTube">' + iconYT() + '</a>' +
+          '</div>' +
+        '</div>' +
+        '<div><h5>Explore</h5>' +
+          '<a href="#/">Home &amp; Inventory</a>' +
+          '<a href="#/car-finder">Car Finder</a>' +
+          '<a href="#/contact">Contact Us</a>' +
+          '<a href="#/directions">Directions</a>' +
+          '<a href="#/disclaimer">Disclaimer</a>' +
+        '</div>' +
+        '<div><h5>Visit Us</h5>' +
+          '<p>' + ADDRESS + '</p>' +
+          '<p>Mon\u2013Fri 9am\u20136pm<br>Sat 9am\u20135pm<br>Sun Closed</p>' +
+        '</div>' +
+        '<div><h5>Contact</h5>' +
+          '<a href="' + TEL + '">' + PHONE + '</a>' +
+          '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>' +
+        '</div>' +
+      '</div>' +
+      '<div class="foot-bottom">' +
+        '<span>\u00a9 ' + new Date().getFullYear() + ' Car Zone LLC. All rights reserved.</span>' +
+        '<span>Design concept \u2014 sample inventory shown for illustration.</span>' +
+      '</div>' +
+    '</div></footer>';
+  }
+
+  function bindGlobal(){
+    var burger = document.getElementById("burger-btn");
+    var header = document.getElementById("site-header");
+    if (burger){
+      burger.onclick = function(){
+        var open = header.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+    }
+  }
+
+  /* ---------------- home ---------------- */
+  var filterState = { make: "", price: "", trans: "", sort: "featured" };
+
+  function priceInRange(v, key){
+    if (v.price == null) return key === "";
+    if (key === "") return true;
+    if (key === "u6") return v.price < 6000;
+    if (key === "6-8") return v.price >= 6000 && v.price <= 8000;
+    if (key === "8-12") return v.price > 8000 && v.price <= 12000;
+    if (key === "12p") return v.price > 12000;
+    return true;
+  }
+
+  function filteredVehicles(){
+    var list = VEHICLES.filter(function(v){
+      if (filterState.make && v.make !== filterState.make) return false;
+      if (filterState.trans && v.trans !== filterState.trans) return false;
+      if (!priceInRange(v, filterState.price)) return false;
+      return true;
+    });
+    if (filterState.sort === "price-asc") list.sort(function(a,b){ return (a.price||0)-(b.price||0); });
+    if (filterState.sort === "price-desc") list.sort(function(a,b){ return (b.price||0)-(a.price||0); });
+    if (filterState.sort === "miles-asc") list.sort(function(a,b){ return a.miles-b.miles; });
+    if (filterState.sort === "newest") list.sort(function(a,b){ return b.year-a.year; });
+    return list;
+  }
+
+  function vehicleCard(v){
+    var statusPill = v.status === "pending"
+      ? '<span class="status-pill status-pending">Coming Soon</span>'
+      : '<span class="status-pill status-active">On The Lot</span>';
+    return '<div class="card">' +
+      '<div class="card-media">' + statusPill + carGlyph(v.paint) +
+        '<div class="price-tag">' + money(v.price) + '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<h3>' + v.year + ' ' + esc(v.make) + ' ' + esc(v.model) + '</h3>' +
+        '<div class="trim">' + esc(v.trim || "") + ' \u00b7 Stock #' + esc(v.stock) + '</div>' +
+        '<div class="meta-row"><span>' + v.miles.toLocaleString() + ' mi</span><span>' + v.trans + '</span></div>' +
+        '<a class="btn btn-ghost btn-block" href="#/vehicle/' + encodeURIComponent(v.id) + '">View Details</a>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderHome(){
+    var makeChips = MAKES.map(function(m){
+      return '<button class="chip" data-make="' + esc(m) + '">' + esc(m) + '</button>';
+    }).join("");
+    var minPrice = Math.min.apply(null, VEHICLES.filter(function(v){return v.price;}).map(function(v){return v.price;}));
+    var maxPrice = Math.max.apply(null, VEHICLES.filter(function(v){return v.price;}).map(function(v){return v.price;}));
+
+    return '' +
+    '<section class="hero">' +
+      '<div class="wrap hero-grid">' +
+        '<div>' +
+          '<div class="eyebrow">Birmingham, Alabama \u00b7 Wholesale Lot</div>' +
+          '<h1 class="display condensed">Real Cars.<br>Real Prices.<br>No Games.</h1>' +
+          '<p class="lede">Car Zone buys, reconditions, and resells used vehicles at wholesale prices. Every car on the lot has been checked over by our own shop before it goes up for sale.</p>' +
+          '<div class="hero-ctas">' +
+            '<a class="btn btn-accent" href="#inventory">See What&rsquo;s On The Lot</a>' +
+            '<a class="btn btn-ghost" href="' + TEL + '">' + iconPhone() + ' ' + PHONE + '</a>' +
+          '</div>' +
+          '<div class="stat-row">' +
+            '<div class="stat"><b class="tabular">' + VEHICLES.length + '</b><span>Vehicles In Stock</span></div>' +
+            '<div class="stat"><b class="tabular">$' + minPrice.toLocaleString() + '&ndash;' + maxPrice.toLocaleString() + '</b><span>Price Range</span></div>' +
+            '<div class="stat"><b class="tabular">6</b><span>Days A Week</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="quick-search">' +
+          '<div class="qs-head"><div class="eyebrow">Quick Search</div><h3>Find Your Next Car</h3></div>' +
+          '<form class="qs-body" id="hero-search">' +
+            '<div class="field"><label for="qs-make">Make</label><select id="qs-make">' + makeOptions(true) + '</select></div>' +
+            '<div class="field"><label for="qs-price">Price</label><select id="qs-price">' + priceOptions() + '</select></div>' +
+            '<button class="btn btn-accent btn-block" type="submit">Search The Lot</button>' +
+          '</form>' +
+          '<div class="qs-note">' + VEHICLES.length + ' vehicles available right now &middot; updated as we buy and sell</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pennant-bar" aria-hidden="true"></div>' +
+    '</section>' +
+
+    '<section class="section" id="inventory">' +
+      '<div class="wrap">' +
+        '<div class="section-head">' +
+          '<div class="eyebrow">Current Inventory</div>' +
+          '<h2>' + VEHICLES.length + ' Vehicles On The Lot Right Now</h2>' +
+        '</div>' +
+        '<p class="section-sub">We keep a tight, rotating lot instead of a giant warehouse &mdash; every vehicle below is physically here today. Inventory turns over fast, so check back often.</p>' +
+        '<div class="chip-row" id="make-chips">' +
+          '<button class="chip" data-make="">All Makes</button>' + makeChips +
+        '</div>' +
+        '<div class="filter-row">' +
+          '<div class="field"><label for="f-make">Make</label><select id="f-make">' + makeOptions(true) + '</select></div>' +
+          '<div class="field"><label for="f-price">Price</label><select id="f-price">' + priceOptions() + '</select></div>' +
+          '<button class="reset" id="f-reset" type="button">Reset filters</button>' +
+        '</div>' +
+        '<details class="more-filters">' +
+          '<summary>More Filters</summary>' +
+          '<div class="filters-extra">' +
+            '<div class="field"><label for="f-trans">Transmission</label>' +
+              '<select id="f-trans"><option value="">Any</option><option value="Automatic">Automatic</option><option value="Manual">Manual</option></select></div>' +
+            '<div class="field"><label for="f-sort">Sort By</label>' +
+              '<select id="f-sort"><option value="featured">Featured</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="miles-asc">Mileage: Low to High</option><option value="newest">Newest First</option></select></div>' +
+          '</div>' +
+        '</details>' +
+        '<div class="result-count" id="result-count"></div>' +
+        '<div class="grid" id="vehicle-grid"></div>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="section">' +
+      '<div class="wrap">' +
+        '<div class="section-head"><div class="eyebrow">Why Buy Here</div><h2>Straight Talk, Straight Deals</h2></div>' +
+        '<div class="trust-grid">' +
+          '<div class="trust-item"><div class="ic">\ud83d\udd27</div><h4>Shop-Checked</h4><p>Every trade-in is inspected and reconditioned in-house before it&rsquo;s listed.</p></div>' +
+          '<div class="trust-item"><div class="ic">\ud83c\udff7\ufe0f</div><h4>Wholesale Pricing</h4><p>We buy in volume so we can sell for less than a typical retail lot.</p></div>' +
+          '<div class="trust-item"><div class="ic">\ud83e\udd1d</div><h4>Family-Run</h4><p>You&rsquo;ll deal directly with the people who own the lot &mdash; not a call center.</p></div>' +
+          '<div class="trust-item"><div class="ic">\ud83d\udccd</div><h4>Local to Birmingham</h4><p>Come see the car in person before you buy. No surprises.</p></div>' +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+
+    '<div class="cta-band"><div class="wrap">' +
+      '<h2 class="display condensed" style="font-size:1.6rem;">Don&rsquo;t See The Right Fit?</h2>' +
+      '<p>Tell us what you&rsquo;re looking for and our buyers will keep an eye out for it.</p>' +
+      '<a class="btn btn-accent" href="#/car-finder">Use Car Finder</a>' +
+    '</div></div>';
+  }
+
+  function renderGrid(){
+    var grid = document.getElementById("vehicle-grid");
+    var count = document.getElementById("result-count");
+    if (!grid) return;
+    var list = filteredVehicles();
+    count.textContent = "Showing " + list.length + " of " + VEHICLES.length + " vehicles";
+    grid.innerHTML = list.length ? list.map(vehicleCard).join("") :
+      '<div class="empty-state" style="grid-column:1/-1;">No vehicles match those filters right now. <button class="btn btn-ghost" id="empty-reset" style="margin-top:12px;">Reset filters</button></div>';
+    var er = document.getElementById("empty-reset");
+    if (er) er.onclick = function(){ resetFilters(); };
+  }
+
+  function resetFilters(){
+    filterState = { make:"", price:"", trans:"", sort:"featured" };
+    document.getElementById("f-make").value = "";
+    document.getElementById("f-price").value = "";
+    document.getElementById("f-trans").value = "";
+    document.getElementById("f-sort").value = "featured";
+    document.getElementById("qs-make").value = "";
+    document.getElementById("qs-price").value = "";
+    document.querySelectorAll("#make-chips .chip").forEach(function(c){ c.classList.toggle("active", c.dataset.make === ""); });
+    renderGrid();
+  }
+
+  function bindHome(){
+    document.getElementById("f-make").onchange = function(e){ filterState.make = e.target.value; syncChips(); renderGrid(); };
+    document.getElementById("f-price").onchange = function(e){ filterState.price = e.target.value; renderGrid(); };
+    document.getElementById("f-trans").onchange = function(e){ filterState.trans = e.target.value; renderGrid(); };
+    document.getElementById("f-sort").onchange = function(e){ filterState.sort = e.target.value; renderGrid(); };
+    document.getElementById("f-reset").onclick = resetFilters;
+    document.querySelectorAll("#make-chips .chip").forEach(function(chip){
+      chip.onclick = function(){
+        filterState.make = chip.dataset.make;
+        document.getElementById("f-make").value = chip.dataset.make;
+        syncChips();
+        renderGrid();
+      };
+    });
+    var heroForm = document.getElementById("hero-search");
+    if (heroForm){
+      heroForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        filterState.make = document.getElementById("qs-make").value;
+        filterState.price = document.getElementById("qs-price").value;
+        document.getElementById("f-make").value = filterState.make;
+        document.getElementById("f-price").value = filterState.price;
+        syncChips();
+        renderGrid();
+        var inv = document.getElementById("inventory");
+        if (inv) inv.scrollIntoView({behavior:"smooth"});
+      });
+    }
+    syncChips();
+    renderGrid();
+  }
+  function syncChips(){
+    document.querySelectorAll("#make-chips .chip").forEach(function(c){
+      c.classList.toggle("active", c.dataset.make === filterState.make);
+    });
+  }
+
+  /* ---------------- vehicle detail ---------------- */
+  function renderVehicleDetail(id){
+    var v = VEHICLES.filter(function(x){ return x.id === id; })[0];
+    if (!v){
+      return '<div class="wrap section"><div class="empty-state">Vehicle not found. <a href="#/">Back to inventory</a></div></div>';
+    }
+    var statusPill = v.status === "pending"
+      ? '<span class="status-pill status-pending" style="position:static;display:inline-block;margin-bottom:10px;">Coming Soon</span>'
+      : '<span class="status-pill status-active" style="position:static;display:inline-block;margin-bottom:10px;">On The Lot</span>';
+
+    return '<div class="wrap section" style="border-top:none;padding-top:26px;">' +
+      '<div class="breadcrumb"><a href="#/">Home</a> / <a href="#/">Inventory</a> / ' + v.year + ' ' + esc(v.make) + ' ' + esc(v.model) + '</div>' +
+      '<div class="vd-grid">' +
+        '<div>' +
+          '<div class="vd-media">' + carGlyph(v.paint) + '</div>' +
+          '<div class="thumb-row">' + carGlyph(v.paint,"") + carGlyph(v.paint,"") + carGlyph(v.paint,"") + '</div>' +
+
+          '<div class="tabs" role="tablist">' +
+            '<button class="tab-btn active" data-tab="details">Details</button>' +
+            '<button class="tab-btn" data-tab="options">Options</button>' +
+            '<button class="tab-btn" data-tab="description">Description</button>' +
+          '</div>' +
+          '<div class="tab-panel" id="tab-details">' +
+            '<div class="spec-sheet">' +
+              specRow("Stock #", v.stock) +
+              specRow("VIN", v.vin) +
+              specRow("Mileage", v.miles.toLocaleString() + " mi") +
+              specRow("Exterior Color", swatch(v.paint)) +
+              specRow("Interior Color", v.intColor) +
+              specRow("Engine", v.engine) +
+              specRow("Transmission", v.trans) +
+              specRow("Doors", v.doors) +
+            '</div>' +
+          '</div>' +
+          '<div class="tab-panel" id="tab-options" style="display:none;"><ul>' +
+            v.options.map(function(o){ return "<li>" + esc(o) + "</li>"; }).join("") +
+          '</ul></div>' +
+          '<div class="tab-panel" id="tab-description" style="display:none;"><p>' + esc(v.description) + '</p></div>' +
+
+          '<div class="disclaimer-box">It is the customer&rsquo;s sole responsibility to verify the existence and condition of any equipment listed. Pricing is subject to change without notice. See our <a href="#/disclaimer">full disclaimer</a>.</div>' +
+        '</div>' +
+        '<div>' +
+          statusPill +
+          '<div class="eyebrow">' + esc(v.make) + '</div>' +
+          '<h1 style="font-size:1.8rem;margin:4px 0 4px;">' + v.year + ' ' + esc(v.make) + ' ' + esc(v.model) + '</h1>' +
+          '<div style="color:var(--muted);margin-bottom:10px;">' + esc(v.trim || "") + '</div>' +
+          '<div class="price-block"><span class="amt">' + money(v.price) + '</span>' +
+            (v.price ? '<span class="down">or as little as $' + Math.round(v.price*0.15/100)*100 + ' down &middot; no financing available, cash or outside financing only</span>' : '') +
+          '</div>' +
+          '<div class="vd-ctas">' +
+            '<a class="btn btn-accent btn-block" href="' + TEL + '">' + iconPhone() + ' Call About This Car</a>' +
+            '<a class="btn btn-ghost btn-block" id="ask-btn" href="#/contact">Ask A Question</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  function swatch(hex){
+    return '<span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:50%;background:'+hex+';border:1px solid var(--line);display:inline-block;"></span></span>';
+  }
+  function specRow(label, val){
+    return '<div class="spec-row"><span>' + label + '</span><span>' + val + '</span></div>';
+  }
+  function bindVehicleDetail(id){
+    document.querySelectorAll(".tab-btn").forEach(function(btn){
+      btn.onclick = function(){
+        document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        ["details","options","description"].forEach(function(t){
+          document.getElementById("tab-"+t).style.display = (t === btn.dataset.tab) ? "" : "none";
+        });
+      };
+    });
+    var ask = document.getElementById("ask-btn");
+    var v = VEHICLES.filter(function(x){ return x.id === id; })[0];
+    if (ask && v){
+      ask.onclick = function(){
+        sessionStorage.setItem("cz-prefill", "I'm interested in the " + v.year + " " + v.make + " " + v.model + " (Stock #" + v.stock + "). Is it still available?");
+      };
+    }
+  }
+
+  /* ---------------- car finder ---------------- */
+  function renderCarFinder(){
+    return '<div class="wrap section" style="border-top:none;padding-top:34px;">' +
+      '<div class="section-head"><div class="eyebrow">Can&rsquo;t Find It On The Lot?</div><h2>Car Finder</h2></div>' +
+      '<div class="form-shell">' +
+        '<div>' +
+          '<p style="color:var(--muted);max-width:60ch;">If we don&rsquo;t have the exact car you&rsquo;re looking for, there&rsquo;s a good chance we know where it is. Tell us what you want and our buyers will search on your behalf &mdash; we&rsquo;ll reach out with a photo and pricing as soon as we find a match.</p>' +
+          '<div id="finder-confirm"></div>' +
+          '<form class="stack" id="finder-form">' +
+            '<div class="form-row">' +
+              '<label><span>Year</span><input name="year" placeholder="e.g. 2018"></label>' +
+              '<label><span>Make</span><input name="make" placeholder="e.g. Honda"></label>' +
+            '</div>' +
+            '<div class="form-row">' +
+              '<label><span>Model</span><input name="model" placeholder="e.g. Accord"></label>' +
+              '<label><span>Transmission</span><select name="transmission"><option value="">No preference</option><option>Automatic</option><option>Manual</option></select></label>' +
+            '</div>' +
+            '<div class="form-row">' +
+              '<label><span>Lowest Price</span><select name="pricelow"><option>$500</option><option selected>$3,000</option><option>$6,000</option><option>$10,000</option></select></label>' +
+              '<label><span>Highest Price</span><select name="pricehigh"><option>$10,000</option><option selected>$15,000</option><option>$25,000</option><option>$50,000</option></select></label>' +
+            '</div>' +
+            '<label><span>How Long Should We Search?</span><select name="duration"><option>2 Weeks</option><option>4 Weeks</option><option>8 Weeks</option><option>Forever</option></select></label>' +
+            '<div class="form-row">' +
+              '<label><span class="req">First Name</span><input required name="firstname"></label>' +
+              '<label><span class="req">Last Name</span><input required name="lastname"></label>' +
+            '</div>' +
+            '<div class="form-row">' +
+              '<label><span class="req">Phone</span><input required type="tel" name="phone"></label>' +
+              '<label><span class="req">Email</span><input required type="email" name="email"></label>' +
+            '</div>' +
+            '<label><span class="req">Zip Code</span><input required name="zip" style="max-width:160px;"></label>' +
+            '<label><span>Comments</span><textarea name="comments" placeholder="Anything else we should know?"></textarea></label>' +
+            '<input class="honeypot" tabindex="-1" autocomplete="off" name="company" aria-hidden="true">' +
+            '<div class="req-note">Fields marked with * are required.</div>' +
+            '<button class="btn btn-accent" type="submit">Start Searching</button>' +
+          '</form>' +
+        '</div>' +
+        infoCard() +
+      '</div>' +
+    '</div>';
+  }
+
+  /* ---------------- contact ---------------- */
+  function renderContact(){
+    return '<div class="wrap section" style="border-top:none;padding-top:34px;">' +
+      '<div class="section-head"><div class="eyebrow">Get In Touch</div><h2>Contact Us</h2></div>' +
+      '<div class="form-shell">' +
+        '<div>' +
+          '<p style="color:var(--muted);max-width:60ch;">Schedule an appointment, set up a test drive, or just ask a question &mdash; send us a message and we&rsquo;ll get back to you.</p>' +
+          '<div id="contact-confirm"></div>' +
+          '<form class="stack" id="contact-form">' +
+            '<label><span class="req">Name</span><input required name="name"></label>' +
+            '<div class="form-row">' +
+              '<label><span class="req">Phone</span><input required type="tel" name="phone"></label>' +
+              '<label><span class="req">E-Mail Address</span><input required type="email" name="email"></label>' +
+            '</div>' +
+            '<label><span>Street Address</span><input name="address1"></label>' +
+            '<label><span>Street Address Line 2</span><input name="address2"></label>' +
+            '<div class="form-row">' +
+              '<label><span>City</span><input name="city"></label>' +
+              '<label><span>State</span><input name="state" maxlength="2" style="max-width:100px;"></label>' +
+            '</div>' +
+            '<label><span>Zip Code</span><input name="zip" style="max-width:160px;"></label>' +
+            '<label><span class="req">Your Message</span><textarea required name="message" id="contact-message" placeholder="How can we help?"></textarea></label>' +
+            '<input class="honeypot" tabindex="-1" autocomplete="off" name="company" aria-hidden="true">' +
+            '<div class="req-note">Fields marked with * are required. Protected against spam automatically &mdash; no CAPTCHA needed.</div>' +
+            '<button class="btn btn-accent" type="submit">Send Message</button>' +
+          '</form>' +
+        '</div>' +
+        infoCard() +
+      '</div>' +
+    '</div>';
+  }
+
+  function infoCard(){
+    return '<div class="info-card">' +
+      '<h3>Car Zone</h3>' +
+      '<div class="info-line"><span class="ic">' + iconPin() + '</span><span>' + ADDRESS + '</span></div>' +
+      '<div class="info-line"><span class="ic">' + iconPhone() + '</span><a href="' + TEL + '">' + PHONE + '</a></div>' +
+      '<div class="info-line"><span class="ic">' + iconMail() + '</span><a href="mailto:' + EMAIL + '">' + EMAIL + '</a></div>' +
+      '<table class="hours-table">' +
+        '<tr><td>Monday&ndash;Friday</td><td>9am&ndash;6pm</td></tr>' +
+        '<tr><td>Saturday</td><td>9am&ndash;5pm</td></tr>' +
+        '<tr><td>Sunday</td><td>Closed</td></tr>' +
+      '</table>' +
+      '<a class="btn btn-ghost btn-block" style="margin-top:14px;" href="#/directions">Get Directions</a>' +
+    '</div>';
+  }
+
+  function bindForm(formId, confirmMsgFn){
+    var form = document.getElementById(formId);
+    if (!form) return;
+    var msgField = document.getElementById("contact-message");
+    var prefill = sessionStorage.getItem("cz-prefill");
+    if (msgField && prefill){ msgField.value = prefill; sessionStorage.removeItem("cz-prefill"); }
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var data = {};
+      new FormData(form).forEach(function(val,key){ data[key]=val; });
+      var confirmEl = document.getElementById(formId === "contact-form" ? "contact-confirm" : "finder-confirm");
+      confirmEl.innerHTML = '<div class="confirm-box">\u2713 ' + confirmMsgFn(data) + '</div>';
+      form.reset();
+      confirmEl.scrollIntoView({behavior:"smooth", block:"center"});
+    });
+  }
+
+  /* ---------------- directions ---------------- */
+  function renderDirections(){
+    return '<div class="wrap section" style="border-top:none;padding-top:34px;">' +
+      '<div class="section-head"><div class="eyebrow">Find The Lot</div><h2>Directions</h2></div>' +
+      '<div class="vd-grid">' +
+        '<div>' +
+          '<div class="map-graphic">' + mapSvg() + '</div>' +
+          '<a class="btn btn-accent" style="margin-top:16px;" href="' + MAPS_URL + '" target="_blank" rel="noopener">' + iconPin() + ' Open In Google Maps</a>' +
+        '</div>' +
+        infoCard() +
+      '</div>' +
+    '</div>';
+  }
+  function mapSvg(){
+    var streets = "";
+    for (var i=1;i<6;i++){ streets += '<line x1="0" y1="'+(i*16.6)+'%" x2="100%" y2="'+(i*16.6)+'%" stroke="var(--line)" stroke-width="2"/>'; }
+    for (var j=1;j<8;j++){ streets += '<line x1="'+(j*12.5)+'%" y1="0" x2="'+(j*12.5)+'%" y2="100%" stroke="var(--line)" stroke-width="2"/>'; }
+    return '<svg viewBox="0 0 400 225" preserveAspectRatio="none">' + streets +
+      '<circle cx="200" cy="110" r="9" fill="var(--accent)"/>' +
+      '<path d="M200,110 m0,-22 a22,22 0 1,1 -0.1,0 z" fill="none" stroke="var(--accent)" stroke-width="3"/>' +
+      '<text x="200" y="150" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="ui-monospace,monospace">3433 Vanderbilt Rd</text>' +
+      '</svg>';
+  }
+
+  /* ---------------- disclaimer ---------------- */
+  function renderDisclaimer(){
+    return '<div class="wrap section legal" style="border-top:none;padding-top:34px;max-width:900px;">' +
+      '<div class="eyebrow">Legal</div><h1 style="margin:6px 0 20px;font-size:1.9rem;">Disclaimer</h1>' +
+      '<h2>Vehicle Information</h2>' +
+      '<p>Every reasonable effort is made to ensure the accuracy of the vehicle information listed on this site. Prices, mileage, equipment, and availability are subject to change without notice. It is the customer&rsquo;s sole responsibility to verify the existence and condition of any equipment listed before purchase.</p>' +
+      '<h2>Pricing</h2>' +
+      '<p>Vehicle prices shown do not include tax, title, license, or dealer documentation fees unless otherwise stated. Car Zone does not offer in-house financing; all purchases are cash or financed through the buyer&rsquo;s own lender.</p>' +
+      '<h2>Photos &amp; Descriptions</h2>' +
+      '<p>Stock photos and illustrations may be used to represent vehicle style and are not always of the actual vehicle. Please contact us or visit the lot to confirm exact condition and specification.</p>' +
+      '<h2>Website Use</h2>' +
+      '<p>Information on this website is provided &ldquo;as is&rdquo; without warranty of any kind. Car Zone is not responsible for typographical errors affecting price or equipment listings.</p>' +
+    '</div>';
+  }
+
+})();
+</script>
